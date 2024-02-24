@@ -9,16 +9,21 @@ environment:
   sdk: ">=3.2.6 <4.0.0"
 
 dependencies:
+  awesome_extensions: ^2.0.12
   cupertino_icons: ^1.0.2
   dio: ^5.4.1
   equatable: ^2.0.5
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.4
+  flutter_screenutil: ^5.9.0
+  flutter_svg: ^2.0.10+1
   get_it: ^7.6.7
   go_router: ^13.2.0
   pretty_dio_logger: ^1.3.1
   shared_preferences: ^2.2.2
+  story_view: ^0.16.5
+  
 
 dev_dependencies:
   flutter_lints: ^2.0.0
@@ -28,3 +33,37 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/svgs/
+
+  fonts: 
+    - family: GoogleSans
+      fonts:
+        - asset: assets/fonts/google_sans/ProductSans-Black.ttf
+        - asset: assets/fonts/google_sans/ProductSans-Bold.ttf
+        - asset: assets/fonts/google_sans/ProductSans-Italic.ttf
+        - asset: assets/fonts/google_sans/ProductSans-Light.ttf
+        - asset: assets/fonts/google_sans/ProductSans-Medium.ttf
+        - asset: assets/fonts/google_sans/ProductSans-Regular.ttf
+        - asset: assets/fonts/google_sans/ProductSans-Thin.ttf
+    - family: Roobert
+      fonts:
+        - asset: assets/fonts/roobert/RoobertBold.ttf
+        - asset: assets/fonts/roobert/RoobertHeavy.ttf
+        - asset: assets/fonts/roobert/RoobertLight.ttf
+        - asset: assets/fonts/roobert/RoobertMedium.ttf
+        - asset: assets/fonts/roobert/RoobertRegular.ttf
+        - asset: assets/fonts/roobert/RoobertSemiBold.ttf
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/inter/Inter-Black.ttf
+        - asset: assets/fonts/inter/Inter-Bold.ttf
+        - asset: assets/fonts/inter/Inter-ExtraBold.ttf
+        - asset: assets/fonts/inter/Inter-ExtraLight.ttf
+        - asset: assets/fonts/inter/Inter-Light.ttf
+        - asset: assets/fonts/inter/Inter-Medium.ttf
+        - asset: assets/fonts/inter/Inter-Regular.ttf
+        - asset: assets/fonts/inter/Inter-SemiBold.ttf
+        - asset: assets/fonts/inter/Inter-Thin.ttf

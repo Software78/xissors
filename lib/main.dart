@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:xissors/config/initializer.dart';
 import 'package:xissors/core/navigation/router.dart';
+import 'package:xissors/core/theme/primary_theme.dart';
 import 'package:xissors/features/products/bloc/product/product_bloc.dart';
 
 import 'features/auth/bloc/auth_bloc/auth_bloc.dart';
@@ -34,9 +36,14 @@ class XissorsApp extends StatelessWidget {
           create: (context) => CategoriesBloc(productRepo),
         ),
       ],
-      child: MaterialApp.router(
-        routerConfig: router,
-        title: 'Flutter Demo',
+      child: ScreenUtilInit(
+        minTextAdapt: true,
+        designSize: const Size(375, 812),
+        builder: (context, child) => MaterialApp.router(
+          routerConfig: router,
+          title: 'Flutter Demo',
+          theme: primaryTheme,
+        ),
       ),
     );
   }
