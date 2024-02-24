@@ -14,7 +14,6 @@ enum MethodType { get, post, put, delete, patch }
 
 class ApiResponse<T extends Object?> {
   final String? message;
-
   final T? data;
   final bool isSuccess;
 

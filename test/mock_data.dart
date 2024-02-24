@@ -28,17 +28,16 @@ final mockProducts = [
 class MockProductRepo implements ProductRepository {
   @override
   Future<ApiResponse<List<Product>>> getProducts() async {
-    return ApiResponse(data: mockProducts, isSuccess: true);
+    return Future.value(ApiResponse(data: mockProducts, isSuccess: true));
   }
 
   @override
   Future<ApiResponse<List<String>>> getCategories() async {
-    return ApiResponse(data: mockCategories, isSuccess: true);
+    return Future.value(ApiResponse(data: mockCategories, isSuccess: true));
   }
 }
 
 class MockAuthRepository extends AuthRepository {
-
   @override
   Future<ApiResponse> login() {
     return Future.value(ApiResponse(isSuccess: true));

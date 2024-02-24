@@ -25,30 +25,6 @@ class Product extends Equatable {
     );
   }
 
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'image': image,
-      'price': price,
-      'quantity': quantity,
-      'category': category,
-    };
-  }
-
-  Product copyWith(
-      {String? name,
-      String? image,
-      double? price,
-      int? quantity,
-      String? category}) {
-    return Product(
-        name: name ?? this.name,
-        image: image ?? this.image,
-        price: price ?? this.price,
-        quantity: quantity ?? this.quantity,
-        category: category ?? this.category);
-  }
-
   @override
   String toString() {
     return 'Product(name: $name, image: $image, price: $price, quantity: $quantity, category: $category)';
@@ -57,11 +33,3 @@ class Product extends Equatable {
   @override
   List<Object?> get props => [name, image, price, quantity, category];
 }
-
-// {
-//             "name": "blissful skin",
-//             "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXsTmAd4oIeJeW-cf1yJDB-jNIMlAs0kXC0g&usqp=CAU",
-//             "price": 100,
-//             "quantity": 2,
-//             "category": "skin"
-//         }
