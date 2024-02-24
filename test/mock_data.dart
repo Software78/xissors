@@ -25,6 +25,8 @@ final mockProducts = [
   ),
 ];
 
+const mockError = 'An error occured';
+
 class MockProductRepo implements ProductRepository {
   @override
   Future<ApiResponse<List<Product>>> getProducts() async {
@@ -39,10 +41,11 @@ class MockProductRepo implements ProductRepository {
 
 class MockAuthRepository extends AuthRepository {
   @override
-  Future<ApiResponse> login() {
-    return Future.value(ApiResponse(isSuccess: true));
+  Future<ApiResponse> login({required String email, required String password}) {
+    return Future.value(ApiResponse(isSuccess: true, message: 'success'));
   }
 }
+
 
 class MockAppInitializer extends AppInitializer {
   static late GetIt instanceLocator;
@@ -68,3 +71,4 @@ class MockAppInitializer extends AppInitializer {
     );
   }
 }
+

@@ -1,3 +1,4 @@
+import 'package:awesome_extensions/awesome_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -14,21 +15,25 @@ class OnboardingScreen extends StatefulWidget {
   State<OnboardingScreen> createState() => _OnboardingScreenState();
 }
 
-class _OnboardingScreenState extends State<OnboardingScreen> {
+class _OnboardingScreenState extends State<OnboardingScreen>
+    with SingleTickerProviderStateMixin {
   late List<StoryItem> items;
   late StoryController storyController;
   late List<String> storyText;
   late int index = 0;
+  late AnimationController animationController;
   @override
   void initState() {
     super.initState();
     storyController = StoryController();
-
     items = List.generate(
       3,
       (index) => StoryItem(
         Image.asset(
           'assets/images/tile_${index + 1}.png',
+          // frameBuilder: (context, child, frame, wasSynchronouslyLoaded) =>
+          //     FadeTransition(opacity: animationController, child: child),
+          // color: context.theme.scaffoldBackgroundColor,
           width: double.infinity,
           height: double.infinity,
         ),
@@ -48,12 +53,20 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           index = 0;
         }
       });
+      animationController.reset();
+      animationController.forward();
     });
+    animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1000),
+    )..forward();
+    
   }
 
   @override
   void dispose() {
     storyController.dispose();
+    animationController.dispose();
     super.dispose();
   }
 
@@ -81,19 +94,25 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SvgPicture.asset('assets/svgs/scissors.svg'),
-                  const Spacer(),
-                  Text(
-                    storyText[index],
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontFamily: FontFamily.inter.value,
-                      fontSize: 30.sp,
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  const Spacer(
+                    flex: 6,
                   ),
-                  const SizedBox(height: 36),
-                  ElevatedButton(onPressed: login, child: const Text('Log In')),
+                  FadeTransition(
+                    opacity: animationController,
+                    child: Text(
+                      storyText[index],
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontFamily: FontFamily.inter.value,
+                        fontSize: 30.sp,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ).flexible(flex: 2),
+                  const Spacer(),
+                  ElevatedButton(onPressed: login, child: const Text('Log In'))
+                      .flexible(),
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {},
@@ -105,7 +124,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         color: Color(0xff3478F6),
                       ),
                     ),
-                  ),
+                  ).flexible(),
                 ],
               ),
             ),

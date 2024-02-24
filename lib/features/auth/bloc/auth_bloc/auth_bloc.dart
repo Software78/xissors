@@ -14,9 +14,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   _login(AuthLoginEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
-    final response = await authRepository.login();
+    final response = await authRepository.login(
+        email: event.email, password: event.password);
     if (response.isSuccess) {
-      emit(AuthSuccess());
+      emit(AuthSuccess(response.message ?? 'An error occured',
+          response.message == 'User signed in successfully'));
     } else {
       emit(AuthFailure(response.message ?? 'An error occurred'));
     }

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:talker/talker.dart';
+import 'package:talker_bloc_logger/talker_bloc_logger.dart';
 import 'package:xissors/core/network/api_client_impl.dart';
 import 'package:xissors/features/auth/data/respository/auth_repository.dart';
 import 'package:xissors/features/products/data/repository/product_repo_impl.dart';
@@ -17,13 +20,17 @@ class AppInitializer {
 
   // AppInitializer._();
 
+  static final talker = Talker();
+
   void close() {
     instanceLocator.reset();
   }
 
   static Future<void> init() async {
     instanceLocator = GetIt.instance;
-    
+    Bloc.observer = TalkerBlocObserver(
+      talker: talker,
+    );
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     initialize();
   }
@@ -43,10 +50,8 @@ class AppInitializer {
   static void initializeLocalDataSources() {
     // instanceLocator.registerLazySingleton<StorageClient>(
     //   () => PrefsStorageImpl(),
-    // );   
+    // );
   }
-
- 
 
   static void initRepos() {
     // instanceLocator

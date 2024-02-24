@@ -10,11 +10,14 @@ class AuthRepositoryImpl implements AuthRepository {
   }) : _apiClient = apiClient;
 
   @override
-  Future<ApiResponse> login() {
+  Future<ApiResponse> login({required String email, required String password}) {
     
     return _apiClient.request(
-      '/login',
+      '/log_in',
       method: MethodType.post,
+      payload: {
+        'email': email,
+        'password': password,}
     );
   }
 }

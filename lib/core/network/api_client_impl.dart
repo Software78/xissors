@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import 'api_client.dart';
 
@@ -7,12 +8,12 @@ class DioApiClient implements ApiClient {
 
   DioApiClient() {
     _dio = Dio(BaseOptions(
-      baseUrl: '',
+      baseUrl: 'https://sfe-mobile.onrender.com/api/v1/',
       connectTimeout: const Duration(seconds: 60),
       receiveTimeout: const Duration(seconds: 60),
       sendTimeout: const Duration(seconds: 60),
     ));
-    _dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
+    _dio.interceptors.add(PrettyDioLogger());
   }
 
   @override
@@ -58,6 +59,7 @@ class DioApiClient implements ApiClient {
       return ApiResponse<T>(
         data: fromJson != null ? fromJson(response.data) : null,
         isSuccess: true,
+        message: response.data['message'] as String?
       );
     } on DioException catch (e) {
       return ApiResponse.error(

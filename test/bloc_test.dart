@@ -10,11 +10,13 @@ import 'mock_data.dart';
 
 void main() async {
   MockAppInitializer.init();
+  
   group('product bloc test', () {
     late ProductRepository mockProductRepo;
     late ProductBloc productBloc;
     setUp(() {
-      mockProductRepo = MockAppInitializer.instanceLocator.get<ProductRepository>();
+      mockProductRepo =
+          MockAppInitializer.instanceLocator.get<ProductRepository>();
       productBloc = ProductBloc(mockProductRepo);
     });
     blocTest(
@@ -33,7 +35,8 @@ void main() async {
     late ProductRepository mockProductRepo;
     late CategoriesBloc categoriesBloc;
     setUp(() {
-      mockProductRepo = MockAppInitializer.instanceLocator.get<ProductRepository>();
+      mockProductRepo =
+          MockAppInitializer.instanceLocator.get<ProductRepository>();
       categoriesBloc = CategoriesBloc(mockProductRepo);
     });
     blocTest(
@@ -58,10 +61,10 @@ void main() async {
     blocTest(
       'Emits [AuthLoading, AuthSuccess] when AuthLoginEvent is added.',
       build: () => authBloc,
-      act: (bloc) => bloc.add(AuthLoginEvent()),
+      act: (bloc) => bloc.add(AuthLoginEvent(email: '', password: '')),
       expect: () => [
         AuthLoading(),
-        AuthSuccess(),
+        AuthSuccess('success', true),
       ],
     );
   });

@@ -16,7 +16,7 @@ class ProductRepositoryImpl implements ProductRepository {
       '/categories',
       method: MethodType.get,
       fromJson: (json) {
-        return (json as List).map((e) => e.toString()).toList();
+        return (json['data'] as List).map((e) => e as String).toList();
       },
     );
   }
@@ -27,7 +27,7 @@ class ProductRepositoryImpl implements ProductRepository {
       '/products',
       method: MethodType.get,
       fromJson: (json) {
-        return (json as List).map((e) => Product.fromJson(e)).toList();
+        return (json['data'] as List).map((e) => Product.fromJson(e)).toList();
       },
     );
   }

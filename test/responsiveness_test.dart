@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:xissors/features/auth/screens/login_screen.dart';
 import 'package:xissors/features/auth/screens/onboarding_screen.dart';
 
 List<MediaQueryData> testScreenSizes = const [
@@ -31,6 +32,21 @@ void main() async {
             home: ScreenUtilInit(
               designSize: size.size,
               child: const OnboardingScreen(),
+            ),
+          ),
+        );
+      }
+    },
+  );
+  testWidgets(
+    'login screen responsiveness test',
+    (widgetTester) async {
+      for (var size in testScreenSizes) {
+        await widgetTester.pumpWidget(
+          MaterialApp(
+            home: ScreenUtilInit(
+              designSize: size.size,
+              child: const LoginScreen(),
             ),
           ),
         );

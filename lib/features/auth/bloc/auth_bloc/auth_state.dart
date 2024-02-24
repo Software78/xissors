@@ -14,8 +14,13 @@ final class AuthLoading extends AuthState {
 }
 
 final class AuthSuccess extends AuthState {
+  final String message;
+  final bool isSuccess;
+
+  AuthSuccess(this.message, this.isSuccess);
+
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [message, isSuccess];
 }
 
 final class AuthFailure extends AuthState {
