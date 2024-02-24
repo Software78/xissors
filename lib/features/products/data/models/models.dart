@@ -1,24 +1,28 @@
-class Product {
-  final String name;
-  final String image;
-  final double price;
-  final int quantity;
-  final String category;
+import 'package:equatable/equatable.dart';
 
-  Product(
-      {required this.name,
-      required this.image,
-      required this.price,
-      required this.quantity,
-      required this.category});
+class Product extends Equatable {
+  final String? name;
+  final String? image;
+  final double? price;
+  final int? quantity;
+  final String? category;
+
+  const Product({
+    this.name,
+    this.image,
+    this.price,
+    this.quantity,
+    this.category,
+  });
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
-        name: json['name'],
-        image: json['image'],
-        price: json['price'],
-        quantity: json['quantity'],
-        category: json['category']);
+      name: json['name'],
+      image: json['image'],
+      price: json['price'],
+      quantity: json['quantity'],
+      category: json['category'],
+    );
   }
 
   Map<String, dynamic> toJson() {
@@ -27,7 +31,7 @@ class Product {
       'image': image,
       'price': price,
       'quantity': quantity,
-      'category': category
+      'category': category,
     };
   }
 
@@ -51,25 +55,7 @@ class Product {
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is Product &&
-        other.name == name &&
-        other.image == image &&
-        other.price == price &&
-        other.quantity == quantity &&
-        other.category == category;
-  }
-
-  @override
-  int get hashCode {
-    return name.hashCode ^
-        image.hashCode ^
-        price.hashCode ^
-        quantity.hashCode ^
-        category.hashCode;
-  }
+  List<Object?> get props => [name, image, price, quantity, category];
 }
 
 // {

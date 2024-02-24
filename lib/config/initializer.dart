@@ -3,17 +3,19 @@ import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:xissors/core/network/api_client_impl.dart';
 import 'package:xissors/features/auth/data/respository/auth_repository.dart';
+import 'package:xissors/features/products/data/repository/product_repo_impl.dart';
 
 import '../../core/navigation/navigator.dart';
 import '../core/network/api_client.dart';
 import '../features/auth/data/respository/auth_repo_impl.dart';
+import '../features/products/data/repository/product_repo.dart';
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class AppInitializer {
   static late GetIt instanceLocator;
 
-  AppInitializer._();
+  // AppInitializer._();
 
   void close() {
     instanceLocator.reset();
@@ -21,7 +23,7 @@ class AppInitializer {
 
   static Future<void> init() async {
     instanceLocator = GetIt.instance;
-    WidgetsFlutterBinding.ensureInitialized();
+    
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     initialize();
   }
@@ -41,29 +43,10 @@ class AppInitializer {
   static void initializeLocalDataSources() {
     // instanceLocator.registerLazySingleton<StorageClient>(
     //   () => PrefsStorageImpl(),
-    // );
-    // instanceLocator.registerLazySingleton<EncryptedStorageClient>(
-    //   () => SecureStorageClient(),
-    // );
-    // instanceLocator.registerLazySingleton<DatabaseStorage>(
-    //   () => IsarStorageClient(
-    //     //TODO: add directory here and schemas
-    //     directory: 'isar',
-    //     schemas: [],
-    //   ),
-    // );
-    // instanceLocator.registerLazySingleton<LocalStorage>(
-    //   () => LocalStoragImpl(
-    //     storageClient: instanceLocator.get<StorageClient>(),
-    //     encryptedStorageClient: instanceLocator.get<EncryptedStorageClient>(),
-    //     databaseStorage: instanceLocator.get<DatabaseStorage>(),
-    //   ),
-    // );
+    // );   
   }
 
-  static void initBlocs() {
-    // instanceLocator.registerFactory<ExampleBloc>(() => ExampleBloc());
-  }
+ 
 
   static void initRepos() {
     // instanceLocator
@@ -79,6 +62,11 @@ class AppInitializer {
   static void initializeRepo() {
     instanceLocator.registerLazySingleton<AuthRepository>(
       () => AuthRepositoryImpl(
+        apiClient: instanceLocator.get<ApiClient>(),
+      ),
+    );
+    instanceLocator.registerLazySingleton<ProductRepository>(
+      () => ProductRepositoryImpl(
         apiClient: instanceLocator.get<ApiClient>(),
       ),
     );
