@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:awesome_extensions/awesome_extensions.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:extended_image/extended_image.dart';
@@ -147,7 +145,7 @@ class _ProductScreenState extends State<ProductScreen>
                       (index) {
                         final products = state.filteredProducts(
                             '${tabs[index + 1].text?.toLowerCase()}');
-                        log(products.toString());
+
                         return EasyRefresh(
                           header: const MaterialHeader(),
                           onRefresh: () => context
@@ -192,7 +190,8 @@ class ProductWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => context.navigator.push(OrderScreen.routeName, extra: product),
+      onTap: () =>
+          context.navigator.push(OrderScreen.routeName, extra: product),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

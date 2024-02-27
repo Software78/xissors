@@ -10,7 +10,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   CartBloc() : super(const CartLoaded({})) {
     on<AddProduct>((event, emit) => _addProduct(event, emit));
     on<RemoveProduct>((event, emit) => _removeProduct(event, emit));
-    on<ClearCart>((event, emit) => _clearCart(event, emit)); 
+    on<ClearCart>((event, emit) => _clearCart(event, emit));
   }
 
   _addProduct(AddProduct event, Emitter<CartState> emit) {
@@ -28,7 +28,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     }
     emit(CartLoaded(productMap));
   }
-  
+
   _clearCart(ClearCart event, Emitter<CartState> emit) {
     productMap = {};
     emit(CartLoaded(productMap));
