@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:xissors/features/auth/bloc/auth_bloc/auth_bloc.dart';
+import 'package:xissors/features/auth/data/respository/auth_repository.dart';
 import 'package:xissors/features/auth/screens/login_screen.dart';
 import 'package:xissors/features/auth/screens/onboarding_screen.dart';
+import 'package:xissors/features/products/bloc/categories/categories_bloc.dart';
+import 'package:xissors/features/products/bloc/product/product_bloc.dart';
+import 'package:xissors/features/products/data/repository/product_repo.dart';
+import 'package:xissors/features/products/screens/product_screen.dart';
+
+import 'mock_data.dart';
 
 List<MediaQueryData> testScreenSizes = const [
   MediaQueryData(size: Size(360, 800)), //Android Large
@@ -23,6 +32,10 @@ List<MediaQueryData> testScreenSizes = const [
 
 void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
+  MockAppInitializer.init();
+  final authRepo = MockAppInitializer.instanceLocator.get<AuthRepository>();
+  final productRepo =
+      MockAppInitializer.instanceLocator.get<ProductRepository>();
   testWidgets(
     'onboarding screen responsiveness test',
     (widgetTester) async {
@@ -43,10 +56,54 @@ void main() async {
     (widgetTester) async {
       for (var size in testScreenSizes) {
         await widgetTester.pumpWidget(
-          MaterialApp(
-            home: ScreenUtilInit(
-              designSize: size.size,
-              child: const LoginScreen(),
+          MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => AuthBloc(authRepo),
+              ),
+              BlocProvider(
+                create: (context) => ProductBloc(productRepo),
+              ),
+              BlocProvider(
+                create: (context) => CategoriesBloc(productRepo),
+              ),
+            ],
+            child: MaterialApp(
+              home: ScreenUtilInit(
+                designSize: size.size,
+                child: const LoginScreen(),
+              ),
+            ),
+          ),
+        );
+      }
+    },
+  );
+
+  testWidgets(
+    'product screen responsiveness test',
+    (widgetTester) async {
+      for (var size in testScreenSizes) {
+        await widgetTester.pumpWidget(
+          MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => AuthBloc(authRepo),
+              ),
+              BlocProvider(
+                create: (context) =>
+                    ProductBloc(productRepo)..add(ProductLoadEvent()),
+              ),
+              BlocProvider(
+                create: (context) =>
+                    CategoriesBloc(productRepo)..add(CategoriesLoadEvent()),
+              ),
+            ],
+            child: MaterialApp(
+              home: ScreenUtilInit(
+                designSize: size.size,
+                child: const ProductScreen(),
+              ),
             ),
           ),
         );

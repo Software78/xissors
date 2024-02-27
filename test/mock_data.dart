@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:xissors/config/initializer.dart';
+import 'package:xissors/core/navigation/navigator.dart';
 import 'package:xissors/core/network/api_client.dart';
 import 'package:xissors/features/auth/data/respository/auth_repository.dart';
 import 'package:xissors/features/products/data/models/models.dart';
@@ -56,7 +58,7 @@ class MockAppInitializer extends AppInitializer {
   }
 
   static void initialize() {
-    // initializeNavigator();
+    initializeNavigator();
     // initializeRemoteDataSources();
     initializeRepo();
   }
@@ -69,6 +71,10 @@ class MockAppInitializer extends AppInitializer {
     instanceLocator.registerLazySingleton<AuthRepository>(
       () => MockAuthRepository(),
     );
+  }
+static
+  void initializeNavigator() {
+    instanceLocator.registerLazySingleton<NavigationService>(() => GoRouterNavigatorImpl(GlobalKey<NavigatorState>()));
   }
 }
 

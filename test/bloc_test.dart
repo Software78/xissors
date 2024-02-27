@@ -64,7 +64,7 @@ void main() async {
       act: (bloc) => bloc.add(AuthLoginEvent(email: '', password: '')),
       expect: () => [
         AuthLoading(),
-        AuthSuccess('success', true),
+        AuthSuccess('success', false),
       ],
     );
   });

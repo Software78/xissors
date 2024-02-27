@@ -6,15 +6,17 @@ import 'package:flutter/material.dart';
 // import 'package:flutter_project_template/config/di/app_initializer.dart';
 import 'package:go_router/go_router.dart';
 import 'package:xissors/features/auth/screens/onboarding_screen.dart';
+import 'package:xissors/features/products/screens/order_screen.dart';
 import 'package:xissors/features/products/screens/product_screen.dart';
 
 import '../../config/initializer.dart';
 import '../../features/auth/screens/login_screen.dart';
+import '../../features/products/data/models/models.dart';
 
 GoRouter router = GoRouter(
   navigatorKey: navigatorKey,
   observers: [],
-  initialLocation: LoginScreen.routeName,
+  // initialLocation: ProductScreen.routeName,
   debugLogDiagnostics: kDebugMode,
   routes: [
     GoRoute(
@@ -27,6 +29,14 @@ GoRouter router = GoRouter(
       path: LoginScreen.routeName,
       pageBuilder: (context, state) => buildPage(
         const LoginScreen(),
+      ),
+    ),
+    GoRoute(
+      path: OrderScreen.routeName,
+      pageBuilder: (context, state) => buildPage(
+         OrderScreen(
+          product: state.extra as Product,
+        ),
       ),
     ),
     GoRoute(

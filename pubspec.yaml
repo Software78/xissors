@@ -12,6 +12,7 @@ dependencies:
   awesome_extensions: ^2.0.12
   cupertino_icons: ^1.0.2
   dio: ^5.4.1
+  easy_refresh: ^3.3.4
   equatable: ^2.0.5
   extended_image: ^8.2.0
   flutter:

@@ -11,6 +11,26 @@ enum FontFamily {
 }
 
 ThemeData primaryTheme = ThemeData(
+  listTileTheme: ListTileThemeData(
+    leadingAndTrailingTextStyle: TextStyle(
+      fontFamily: FontFamily.googleSans.value,
+      fontWeight: FontWeight.w500,
+      color: Colors.white,
+      fontSize: 14.sp,
+    ),
+    titleTextStyle: TextStyle(
+      fontFamily: FontFamily.googleSans.value,
+      fontWeight: FontWeight.w700,
+      color: const Color.fromRGBO(176, 182, 191, 1),
+      fontSize: 12.sp,
+    ),
+  ),
+  expansionTileTheme: const ExpansionTileThemeData(
+    backgroundColor: Color(0xff2B426A),
+    collapsedBackgroundColor: Color(0xff172744),
+    collapsedTextColor: Colors.white,
+    textColor: Colors.white,
+  ),
   dividerColor: const Color(0xff263238),
   tabBarTheme: const TabBarTheme(
     indicatorSize: TabBarIndicatorSize.tab,
@@ -38,7 +58,6 @@ ThemeData primaryTheme = ThemeData(
   )),
   useMaterial3: false,
   inputDecorationTheme: InputDecorationTheme(
-    
     suffixIconColor: const Color(0xffBCC1D1),
     hintStyle: TextStyle(
       fontFamily: FontFamily.googleSans.value,

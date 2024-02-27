@@ -7,6 +7,8 @@ import 'package:xissors/core/navigation/navigator.dart';
 import 'package:xissors/core/theme/primary_theme.dart';
 import 'package:xissors/features/auth/screens/login_screen.dart';
 
+const loginButtonKey = ValueKey('loginButton');
+
 class OnboardingScreen extends StatefulWidget {
   static const routeName = '/';
   const OnboardingScreen({super.key});
@@ -60,7 +62,6 @@ class _OnboardingScreenState extends State<OnboardingScreen>
       vsync: this,
       duration: const Duration(milliseconds: 1000),
     )..forward();
-    
   }
 
   @override
@@ -111,8 +112,11 @@ class _OnboardingScreenState extends State<OnboardingScreen>
                     ),
                   ).flexible(flex: 2),
                   const Spacer(),
-                  ElevatedButton(onPressed: login, child: const Text('Log In'))
-                      .flexible(),
+                  ElevatedButton(
+                    key: loginButtonKey,
+                    onPressed: login,
+                    child: const Text('Log In'),
+                  ).flexible(),
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () {},

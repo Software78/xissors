@@ -51,7 +51,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void login() {
-    context.navigator.push(ProductScreen.routeName);
+    context.navigator.pushReplacement(ProductScreen.routeName);
   }
 
   void toggleVisibility() {

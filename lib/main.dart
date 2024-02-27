@@ -8,6 +8,7 @@ import 'package:loader_overlay/loader_overlay.dart';
 import 'package:xissors/config/initializer.dart';
 import 'package:xissors/core/navigation/router.dart';
 import 'package:xissors/core/theme/primary_theme.dart';
+import 'package:xissors/features/products/bloc/cart/cart_bloc.dart';
 import 'package:xissors/features/products/bloc/product/product_bloc.dart';
 
 import 'features/auth/bloc/auth_bloc/auth_bloc.dart';
@@ -39,6 +40,9 @@ class XissorsApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => CategoriesBloc(productRepo),
+        ),
+        BlocProvider(
+          create: (context) => CartBloc(),
         ),
       ],
       child: ScreenUtilInit(
