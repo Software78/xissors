@@ -14,12 +14,14 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   _addProduct(AddProduct event, Emitter<CartState> emit) {
+    emit(CartLoading());
     int count = productMap[event.product] ?? 0;
     productMap[event.product] = count++;
     emit(CartLoaded(productMap));
   }
 
   _removeProduct(RemoveProduct event, Emitter<CartState> emit) {
+    emit(CartLoading());
     int count = productMap[event.product] ?? 0;
     if (count > 0) {
       productMap[event.product] = count--;
@@ -30,6 +32,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   _clearCart(ClearCart event, Emitter<CartState> emit) {
+    emit(CartLoading());
     productMap = {};
     emit(CartLoaded(productMap));
   }

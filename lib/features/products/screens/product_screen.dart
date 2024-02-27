@@ -4,6 +4,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import 'package:loader_overlay/loader_overlay.dart';
@@ -126,18 +127,31 @@ class _ProductScreenState extends State<ProductScreen>
                       header: const MaterialHeader(),
                       onRefresh: () =>
                           context.read<ProductBloc>().add(ProductLoadEvent()),
-                      child: GridView.builder(
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          childAspectRatio: 0.7,
-                          crossAxisSpacing: 9,
+                      child: AnimationLimiter(
+                        child: GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 0.7,
+                            crossAxisSpacing: 9,
+                          ),
+                          itemCount: state.products.length,
+                          itemBuilder: (context, index) {
+                            final product = state.products[index];
+                            return AnimationConfiguration.staggeredGrid(
+                              columnCount: 2,
+                              position: index,
+                              child: FadeInAnimation(
+                                child: SlideAnimation(
+                                  verticalOffset: 50,
+                                  horizontalOffset: 50,
+                                  curve: Curves.decelerate,
+                                  child: ProductWidget(product: product),
+                                ),
+                              ),
+                            );
+                          },
                         ),
-                        itemCount: state.products.length,
-                        itemBuilder: (context, index) {
-                          final product = state.products[index];
-                          return ProductWidget(product: product);
-                        },
                       ),
                     ),
                     ...List.generate(
@@ -151,18 +165,31 @@ class _ProductScreenState extends State<ProductScreen>
                           onRefresh: () => context
                               .read<ProductBloc>()
                               .add(ProductLoadEvent()),
-                          child: GridView.builder(
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              childAspectRatio: 0.7,
-                              crossAxisSpacing: 9,
+                          child: AnimationLimiter(
+                            child: GridView.builder(
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                childAspectRatio: 0.7,
+                                crossAxisSpacing: 9,
+                              ),
+                              itemCount: products.length,
+                              itemBuilder: (context, index) {
+                                final product = products[index];
+                                return AnimationConfiguration.staggeredGrid(
+                                  columnCount: 2,
+                                  position: index,
+                                  child: FadeInAnimation(
+                                    child: SlideAnimation(
+                                      verticalOffset: 50,
+                                      horizontalOffset: 50,
+                                      curve: Curves.decelerate,
+                                      child: ProductWidget(product: product),
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
-                            itemCount: products.length,
-                            itemBuilder: (context, index) {
-                              final product = products[index];
-                              return ProductWidget(product: product);
-                            },
                           ),
                         );
                       },

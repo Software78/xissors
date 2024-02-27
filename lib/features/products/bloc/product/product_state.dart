@@ -2,7 +2,8 @@ part of 'product_bloc.dart';
 
 @immutable
 sealed class ProductState extends Equatable {
-  List<Product>  filteredProducts(String category) => [];
+  List<Product> filteredProducts(String category) => [];
+  Product getProductByName(String name) => const Product();
 }
 
 final class ProductInitial extends ProductState {
@@ -24,8 +25,13 @@ final class ProductSuccess extends ProductState {
   List<Object?> get props => [products];
 
   @override
-  List<Product>  filteredProducts(String category) {
+  List<Product> filteredProducts(String category) {
     return products.where((element) => element.category == category).toList();
+  }
+
+  @override
+  Product getProductByName(String name) {
+    return products.firstWhere((element) => element.name == name);
   }
 }
 

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -47,87 +49,92 @@ class _OrderScreenState extends State<OrderScreen> {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: REdgeInsets.all(24),
-            child: ExpansionTile(
-              title: const Text(
-                'VIEW BREAKDOWN',
-              ),
-              initiallyExpanded: true,
-              trailing: SvgPicture.asset('assets/svgs/preview.svg'),
-              children: [
-                const ListTile(
-                  title: Text('SUBTOTAL'),
-                  trailing: Text('₦0.00'),
-                  visualDensity: VisualDensity(vertical: -2),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: REdgeInsets.all(24),
+              child: ExpansionTile(
+                title: const Text(
+                  'VIEW BREAKDOWN',
                 ),
-                const ListTile(
-                  title: Text('SUBTOTAL'),
-                  trailing: Text('₦0.00'),
-                  visualDensity: VisualDensity(vertical: -2),
-                ),
-                const ListTile(
-                  title: Text('SUBTOTAL'),
-                  trailing: Text('₦0.00'),
-                  visualDensity: VisualDensity(vertical: -2),
-                ),
-                ListTile(
-                  title: const Text('SUBTOTAL'),
-                  titleTextStyle: TextStyle(
-                    color: Colors.white,
-                    fontSize: 17.sp,
-                    fontWeight: FontWeight.w700,
+                initiallyExpanded: true,
+                trailing: SvgPicture.asset('assets/svgs/preview.svg'),
+                children: [
+                  const ListTile(
+                    title: Text('SUBTOTAL'),
+                    trailing: Text('₦0.00'),
+                    visualDensity: VisualDensity(vertical: -2),
                   ),
-                  trailing: const Text('₦0.00'),
-                  visualDensity: const VisualDensity(vertical: 4),
-                ),
-              ],
+                  const ListTile(
+                    title: Text('YOUR COMMISSION'),
+                    trailing: Text('\$0.00'),
+                    visualDensity: VisualDensity(vertical: -2),
+                  ),
+                  const ListTile(
+                    title: Text('TAX (5%)'),
+                    trailing: Text('\$0.00'),
+                    visualDensity: VisualDensity(vertical: -2),
+                  ),
+                  ListTile(
+                    title: const Text('TOTAL'),
+                    titleTextStyle: TextStyle(
+                      color: Colors.white,
+                      fontSize: 17.sp,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    trailing: const Text('₦0.00'),
+                    visualDensity: const VisualDensity(vertical: 4),
+                  ),
+                ],
+              ),
             ),
-          ),
-          const Divider(
-            thickness: 1,
-            color: Color(0xff434D6B),
-          ),
-          ListTile(
-            title: const Text('ADD SERVICE'),
-            titleTextStyle: TextStyle(
-              color: Colors.white,
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w500,
+            const Divider(
+              thickness: 1,
+              color: Color(0xff434D6B),
             ),
-            contentPadding: REdgeInsets.symmetric(horizontal: 24),
-            trailing: SvgPicture.asset('assets/svgs/add.svg'),
-            visualDensity: const VisualDensity(vertical: -2),
-          ),
-          const Divider(
-            thickness: 1,
-            color: Color(0xff434D6B),
-          ),
-          Padding(
-            padding: REdgeInsets.symmetric(horizontal: 24),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'PRODUCTS ( 2 )',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w700, color: Color(0xff888f9b)),
-                ),
-                TextButton.icon(
-                  onPressed: () {},
-                  icon: const Icon(Icons.add),
-                  label: const Text('New Product'),
-                )
-              ],
+            ListTile(
+              title: const Text('ADD SERVICE'),
+              titleTextStyle: TextStyle(
+                color: Colors.white,
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w500,
+              ),
+              contentPadding: REdgeInsets.symmetric(horizontal: 24),
+              trailing: SvgPicture.asset('assets/svgs/add.svg'),
+              visualDensity: const VisualDensity(vertical: -2),
             ),
-          ),
-          Expanded(
-            child: BlocBuilder<CartBloc, CartState>(
+            const Divider(
+              thickness: 1,
+              color: Color(0xff434D6B),
+            ),
+            Padding(
+              padding: REdgeInsets.symmetric(horizontal: 24),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'PRODUCTS ( ${context.read<CartBloc>().state.products.length} )',
+                    style: const TextStyle(
+                      fontWeight: FontWeight.w700,
+                      color: Color(0xff888f9b),
+                    ),
+                  ),
+                  TextButton.icon(
+                    onPressed: () {},
+                    icon: const Icon(Icons.add),
+                    label: const Text('New Product'),
+                  )
+                ],
+              ),
+            ),
+            BlocBuilder<CartBloc, CartState>(
               builder: (context, state) {
                 final products = state.products;
+                log(products.toString());
                 return ListView.separated(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   padding: REdgeInsets.symmetric(horizontal: 24),
                   separatorBuilder: (context, index) => const Padding(
                     padding: EdgeInsets.symmetric(vertical: 24.0),
@@ -144,28 +151,28 @@ class _OrderScreenState extends State<OrderScreen> {
                 );
               },
             ),
-          ),
-          const Divider(
-            thickness: 1,
-            color: Color(0xff434D6B),
-          ),
-          ListTile(
-            contentPadding: REdgeInsets.symmetric(horizontal: 24),
-            titleTextStyle: TextStyle(
-              color: Colors.white,
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w500,
+            const Divider(
+              thickness: 1,
+              color: Color(0xff434D6B),
             ),
-            title: const Text('TOTAL'),
-          ),
-          Padding(
-            padding: REdgeInsets.all(24),
-            child: ElevatedButton(
-              onPressed: () {},
-              child: const Text('PROCEED TO PAYMENT'),
+            ListTile(
+              contentPadding: REdgeInsets.symmetric(horizontal: 24),
+              titleTextStyle: TextStyle(
+                color: Colors.white,
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w500,
+              ),
+              title: const Text('TOTAL'),
             ),
-          ),
-        ],
+            Padding(
+              padding: REdgeInsets.all(24),
+              child: ElevatedButton(
+                onPressed: () {},
+                child: const Text('PROCEED TO PAYMENT'),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -212,7 +219,7 @@ class CartProductWidget extends StatelessWidget {
                 ),
                 style: TextStyle(
                   fontSize: 14.sp,
-                  color: Colors.white,
+                  color: const Color(0xffF8B02B),
                 ),
               ),
               const Spacer(),
